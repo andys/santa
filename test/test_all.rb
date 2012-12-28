@@ -9,7 +9,7 @@ class TestSanta < Test::Unit::TestCase
 
   def test_command
     @santa.deb 'xyz'
-    assert_equal [["apt-get", "update"], ["apt-get", "install", "xyz"]], @santa.commands_to_run 
+    assert_equal [["apt-get", "update"], ["apt-get", "install", "-y", "xyz"]], @santa.commands_to_run 
   end
 
   def test_add_repo
@@ -18,8 +18,16 @@ class TestSanta < Test::Unit::TestCase
         deb 'xyz'
       end
     end
-    assert_equal [["add-apt-repository", "-y", "rrr"],["apt-get", "update"], ["apt-get", "install", "xyz"]], @santa.commands_to_run 
+    assert_equal [["add-apt-repository", "-y", "rrr"],["apt-get", "update"], ["apt-get", "install", "-y", "xyz"]], @santa.commands_to_run 
   end
+
+  def test_add_repo
+    @santa.instance_eval do 
+      deb 'xyz', repo: 'rrr'
+    end
+    assert_equal [["add-apt-repository", "-y", "rrr"],["apt-get", "update"], ["apt-get", "install", "-y", "xyz"]], @santa.commands_to_run 
+  end
+
 
 
 end

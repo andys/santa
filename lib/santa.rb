@@ -13,7 +13,10 @@ class Santa
   end
 
   def deb(debname, opts={})
-    append_cmd 'apt-get', 'install', debname.to_s
+    if(r = opts.delete(:repo))
+      repo(*r)
+    end
+    append_cmd 'apt-get', 'install', '-y', debname.to_s
   end
 
   def cmd(*cmds)
@@ -40,7 +43,7 @@ class Santa
   
   def repo(*repos, &bl)
     repos.each {|r| prepend_cmd 'add-apt-repository', '-y', r.to_s }
-    prepend_cmd 'apt-get', 'install', 'python-software-properties' unless executable? 'add-apt-repository'
+    prepend_cmd 'apt-get', 'install', '-y', 'python-software-properties' unless executable? 'add-apt-repository'
 
     instance_eval &bl if bl
   end

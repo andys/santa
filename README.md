@@ -8,7 +8,13 @@ You can with santa.
 
     $ gem install santa
 
-    $ echo deb "ruby1.9.1-dev" > Debfile
+    $ cat <<EOF > Debfile
+    deb "ruby1.9.1-dev"
+    deb "nginx", repo: "ppa:nginx/stable"
+    EOF
 
     $ santa
-
+    --> sudo add-apt-repository -y ppa:nginx/stable
+    --> sudo apt-get update
+    --> sudo apt-get install -y ruby1.9.1-dev
+    --> sudo apt-get install -y nginx
