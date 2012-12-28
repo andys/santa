@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+raise "Where is the Debfile?" unless if File.readable? 'Debfile'
+
+Santa.new(File.read('Debfile'))
