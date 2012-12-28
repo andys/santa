@@ -1,0 +1,7 @@
+CHANGELOG
+README.md
+Rakefile
+bin/santa
+lib/santa.rb
+test/test_all.rb
+Manifest
